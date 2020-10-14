@@ -78,7 +78,7 @@
                     android:layout_below="@+id/sb_progress"
                     android:layout_marginEnd="@dimen/dp_10"
 
-                    android:layout_toLeftOf="@+id/song_next"
+                    android:layout_toStartOf="@+id/song_next"
                     ripple:rv_centered="true">
 
                     <Button

@@ -2,6 +2,7 @@ package com.dzh.dzhmusicandcamera.base.activity;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import butterknife.Unbinder;
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
+  private final static String TAG = "DzhBaseActivity";
   private Unbinder mBinder;
 
   protected abstract int getLayoutId();
@@ -26,8 +28,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
   protected abstract void onClick();
 
   @Override
-  public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-    super.onCreate(savedInstanceState, persistentState);
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Log.d(TAG, "onCreate: ");
     setContentView(getLayoutId());
     ButterKnife.bind(this);
     initView();
