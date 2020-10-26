@@ -12,7 +12,7 @@ public class CommonUtil {
   private static Toast sToast;
 
   public static void showToast(Context context, String message) {
-    if (context == null) {
+    if (sToast == null) {
       sToast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
     } else {
       sToast.setText(message);
