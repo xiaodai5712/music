@@ -3,6 +3,7 @@ package com.dzh.dzhmusicandcamera.model.https.api;
 import android.util.Log;
 
 import com.dzh.dzhmusicandcamera.app.Api;
+import com.dzh.dzhmusicandcamera.model.https.RetrofitService;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;

@@ -1,10 +1,13 @@
 package com.dzh.dzhmusicandcamera.base.entity;
 
+import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
+
 /**
  * Date: 2020/10/14
  * author: Dzh
  */
-public class OnlineSong {
+public class OnlineSong extends LitePalSupport {
   private int id;
   private String songId;
   private String mediaId; //下载标识符

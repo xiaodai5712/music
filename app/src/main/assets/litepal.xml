@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="SongList" />
+
+    <version value="27" />
+
+    <list>
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.OnlineSong" />
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.LocalSong" />
+<!--        <mapping class="com.dzh.dzhmusicandcamera.base.entity.SearchHistory" />-->
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.Love" />
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.HistorySong" />
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.AlbumCollection" />
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.DownloadSong" />
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.DownloadInfo"/>
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.Song"/>
+    </list>
+</litepal>

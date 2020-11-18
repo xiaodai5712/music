@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_function"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/translucent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_jay"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_centerVertical="true"
+            android:src="@drawable/jay"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_toRightOf="@id/cv_jay"
+            android:text="@string/author"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/other"
+            android:layout_toRightOf="@id/cv_jay"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="@dimen/dp_5"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/white_blue"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20">
+
+        <LinearLayout
+            android:id="@+id/linear_local_music"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:orientation="vertical"
+            >
+
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/selector_linear_drawable" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/local_music"
+                android:textColor="@drawable/selector_linear_click"
+                />
+            <TextView
+                android:id="@+id/tv_local_music_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@drawable/selector_linear_click"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linear_collection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/collection" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/collection"
+                android:textColor="@drawable/selector_linear_click"/>
+            <TextView
+                android:id="@+id/tv_love_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@drawable/selector_linear_click"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/downloadLinear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:focusable="true">
+
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/download" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/download"
+                android:textColor="@drawable/selector_linear_click"/>
+            <TextView
+                android:id="@+id/tv_download_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@drawable/selector_linear_click"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linear_history"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/history" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchHistory"
+                android:textColor="@drawable/selector_linear_click"
+                />
+            <TextView
+                android:id="@+id/tv_history_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@drawable/selector_linear_click"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

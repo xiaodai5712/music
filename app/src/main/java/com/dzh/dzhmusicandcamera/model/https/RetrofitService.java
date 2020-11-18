@@ -1,4 +1,4 @@
-package com.dzh.dzhmusicandcamera.model.https.api;
+package com.dzh.dzhmusicandcamera.model.https;
 
 import com.dzh.dzhmusicandcamera.app.Api;
 import com.dzh.dzhmusicandcamera.base.entity.Album;
@@ -42,7 +42,7 @@ public interface RetrofitService {
    * @param id 专辑mid
    */
   @GET(Api.ALBUM_DETAIL)
-  Observable<AlbumSong> getAlbum(@Query("albumid") String id);
+  Observable<AlbumSong> getAlbumSong(@Query("albumid") String id);
 
   /**
    * 得到歌曲的播放地址，变化的只有songmid，即{}所示

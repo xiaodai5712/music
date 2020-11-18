@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -72,33 +73,52 @@ public class DownloadService extends Service {
       DownloadInfo downloadInfo = mDownloadQueue.poll();
       operateDb(downloadInfo); // 操作数据库
       start();
+      stopForeground(true);
+      if (mDownloadQueue.isEmpty()) {
+        getNotificationManager().notify(1, getNotification("下载成功", -1));
+      }
     }
 
     @Override
     public void onDownloaded() {
-
+      mDownloadTask = null;
+      CommonUtil.showToast(DownloadService.this, "已下载");
     }
 
     @Override
     public void onFailed() {
-
+      mDownloadTask = null;
+      // 下载失败通知前台服务通知关闭，并创建一个下载失败的通知
+      getNotificationManager().notify(1, getNotification("下载失败", -1));
+      Toast.makeText(DownloadService.this, "下载失败", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPaused() {
-
+      mDownloadTask = null;
+      DownloadInfo downloadInfo = mDownloadQueue.poll(); // 如果没有 poll 不会抛异常，而是返回null
+      updateDbOfPause(downloadInfo.getSongId());
+      getNotificationManager()
+          .notify(1, getNotification("下载已暂停" + downloadInfo.getSongName(), -1));
+      start();
+      downloadInfo.setStatus(Constant.DOWNLOAD_PAUSED);
+      EventBus.getDefault()
+          .post(new DownloadEvent(Constant.TYPE_DOWNLOAD_PAUSED, downloadInfo)); // 下载暂停
+      CommonUtil.showToast(DownloadService.this, "下载已暂停");
     }
 
     @Override
     public void onCanceled() {
-
+      mDownloadTask = null;
+      stopForeground(true);
+      CommonUtil.showToast(DownloadService.this, "下载已取消");
     }
   };
 
   @Nullable
   @Override
   public IBinder onBind(Intent intent) {
-    return null;
+    return mDownloadBinder;
   }
 
   private void start() {
@@ -118,6 +138,7 @@ public class DownloadService extends Service {
   }
 
   public class DownloadBinder extends Binder {
+
     public void startDownload(DownloadInfo song) {
       try {
         postDownloadEvent(song); // 通知正在下载界面
@@ -129,6 +150,49 @@ public class DownloadService extends Service {
       } else {
         CommonUtil.showToast(DownloadService.this, "开始下载");
         start();
+      }
+    }
+
+    public void pauseDownload(String songId) {
+      // 暂停的歌曲是否位当前下载的歌曲
+      if (mDownloadTask != null && mDownloadQueue.peek().getSongId().equals(songId)) {
+        mDownloadTask.pauseDownload();
+      } else { // 暂停的歌曲是下载队列的歌曲
+        // 将歌曲从下载队列中移除
+        for (int i = 0; i < mDownloadQueue.size(); i++) {
+          DownloadInfo downloadInfo = mDownloadQueue.get(i);
+          if (downloadInfo.getSongId().equals(songId)) {
+            mDownloadQueue.remove(i);
+            updateDbOfPause(downloadInfo.getSongId());
+            downloadInfo.setStatus(Constant.DOWNLOAD_PAUSED);
+            EventBus.getDefault()
+                .post(new DownloadEvent(Constant.TYPE_DOWNLOAD_PAUSED, downloadInfo)); // 下载暂停
+          }
+        }
+      }
+    }
+
+    public void cancelDownload(DownloadInfo downloadInfo) {
+      String songId = downloadInfo.getSongId();
+      // 如果歌曲正在下载，则需要将downloadTask置为null
+      if (mDownloadTask != null && mDownloadQueue.peek().getSongId().equals(songId)) {
+        mDownloadTask.cancelDownload();
+      }
+      // 将歌曲从下载队列移除
+      for (int i = 0; i < mDownloadQueue.size(); i++) {
+        DownloadInfo info = mDownloadQueue.get(i);
+        if (info.getSongId().equals(songId)) {
+          mDownloadQueue.remove(i);
+        }
+        updateDb(songId);
+        deleteDb(songId);
+        // 取消下载速妖文件删除并通知关闭
+        if (downloadInfo.getUrl() != null) {
+          checkoutFile(downloadInfo, downloadInfo.getUrl()); // 实际文件长度
+        }
+
+        // 通知正在下载列表
+        EventBus.getDefault().post(new DownloadEvent(Constant.TYPE_DOWNLOAD_CANCELED));
       }
     }
   }
@@ -254,5 +318,4 @@ public class DownloadService extends Service {
   private NotificationManager getNotificationManager() {
     return (NotificationManager) (getSystemService(NOTIFICATION_SERVICE));
   }
-
 }
