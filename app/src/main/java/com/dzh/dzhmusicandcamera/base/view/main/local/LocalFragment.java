@@ -161,10 +161,11 @@ public class LocalFragment extends BaseMvpFragment<LocalPresenter> implements IL
     return R.layout.fragment_local;
   }
 
+  // 展示本地音乐列表
   @Override
-  public void showMusicList(List<LocalSong> mp3InfoLIst) {
+  public void showMusicList(List<LocalSong> mp3InfoList) {
     mLocalSongsList.clear();
-    mLocalSongsList.addAll(mp3InfoLIst);
+    mLocalSongsList.addAll(mp3InfoList);
     mRecycler.setVisibility(View.VISIBLE);
     mEmptyViewLinear.setVisibility(View.GONE);
     mRecycler.setLayoutManager(mLayoutManager);

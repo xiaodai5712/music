@@ -2,6 +2,7 @@ package com.dzh.dzhmusicandcamera.model.db;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.dzh.dzhmusicandcamera.app.Api;
 import com.dzh.dzhmusicandcamera.app.App;
@@ -24,6 +25,7 @@ import java.util.List;
  * 数据库操作类
  */
 public class DbHelperImpl implements DbHelper {
+  private static final String TAG = "DzhDbHelperImpl";
   @Override
   public void insertAllAlbumSong(List<AlbumSong.DataBean.ListBean> songList) {
     LitePal.deleteAll(OnlineSong.class);
@@ -49,6 +51,7 @@ public class DbHelperImpl implements DbHelper {
     Cursor cursor = App.getContext().getContentResolver()
         .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null
             , null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+    Log.d(TAG, "getLocalMp3Info: " + MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
     for (int i = 0; i < cursor.getCount(); i++) {
       cursor.moveToNext();
       LocalSong mp3Info = new LocalSong();
@@ -129,22 +132,24 @@ public class DbHelperImpl implements DbHelper {
       return;
     }
     File[] subFile = file.listFiles();
-    for (File value : subFile) {
-      String songFileName = value.getName();
-      String songFile = songFileName.substring(0, songFileName.indexOf("."));
-      String[] songValue = songFile.split("-");
-      long size = Long.valueOf(songValue[4]);
-      // 如果文件的大小不等于实际大小，则表示该歌曲还未下载完成， 被认为暂停， 故跳过该歌曲，不加入道已下载集合
-      if (size != value.length()) {
-        continue;
+    if (subFile != null) {
+      for (File value : subFile) {
+        String songFileName = value.getName();
+        String songFile = songFileName.substring(0, songFileName.indexOf("."));
+        String[] songValue = songFile.split("-");
+        long size = Long.valueOf(songValue[4]);
+        // 如果文件的大小不等于实际大小，则表示该歌曲还未下载完成， 被认为暂停， 故跳过该歌曲，不加入道已下载集合
+        if (size != value.length()) {
+          continue;
+        }
+        LocalSong song = new LocalSong();
+        song.setSinger(songValue[0]);
+        song.setName(songValue[1]);
+        song.setDuration(Long.valueOf(songValue[2]));
+        song.setSongId(songValue[3]);
+        song.setUrl(Api.STORAGE_SONG_FILE + songFileName);
+        songList.add(song);
       }
-      LocalSong song = new LocalSong();
-      song.setSinger(songValue[0]);
-      song.setName(songValue[1]);
-      song.setDuration(Long.valueOf(songValue[2]));
-      song.setSongId(songValue[3]);
-      song.setUrl(Api.STORAGE_SONG_FILE + songFileName);
-      songList.add(song);
     }
   }
 }

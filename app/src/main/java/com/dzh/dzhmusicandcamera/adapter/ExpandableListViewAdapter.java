@@ -112,6 +112,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
       view = LayoutInflater.from(mContext).inflate(R.layout.item_second, parent, false);
       childViewHolder.albumNameTv = view.findViewById(R.id.tv_album_name);
       childViewHolder.faceIv = view.findViewById(R.id.iv_album);
+      childViewHolder.authorTv = view.findViewById(R.id.tv_author);
       childViewHolder.childView = view.findViewById(R.id.ripple);
       view.setTag(childViewHolder);
     } else {

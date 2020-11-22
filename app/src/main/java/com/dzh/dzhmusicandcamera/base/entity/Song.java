@@ -1,10 +1,14 @@
 package com.dzh.dzhmusicandcamera.base.entity;
 
+import org.litepal.crud.LitePalSupport;
+
+import java.io.Serializable;
+
 /**
  * Date: 2020/10/14
  * author: Dzh
  */
-public class Song {
+public class Song extends LitePalSupport implements Serializable {
   private static final long serialVersionUID=1L;
 
   private long id;

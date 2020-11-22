@@ -24,22 +24,25 @@ public class DownloadUtil {
       return res;
     }
     File[] subFile = file.listFiles();
-    for (File value : subFile) {
-      String songFileName = value.getName();
-      String songFile = songFileName.substring(0, songFileName.lastIndexOf("."));
-      String[] songValue = songFile.split("-");
-      long size = Long.valueOf(songValue[4]);
-      // 如果文件的大小不等于实际大小，则表示该歌曲还未下载完成，被认为暂停，故跳过该歌曲，不加入到已下载集合
-      if (size != value.length()) {
-        continue;
+    if (subFile != null) {
+      for (File value : subFile) {
+
+        String songFileName = value.getName();
+        String songFile = songFileName.substring(0, songFileName.lastIndexOf("."));
+        String[] songValue = songFile.split("-");
+        long size = Long.valueOf(songValue[4]);
+        // 如果文件的大小不等于实际大小，则表示该歌曲还未下载完成，被认为暂停，故跳过该歌曲，不加入到已下载集合
+        if (size != value.length()) {
+          continue;
+        }
+        DownloadSong downloadSong = new DownloadSong();
+        downloadSong.setSinger(songValue[0]);
+        downloadSong.setName(songValue[1]);
+        downloadSong.setDuration(Long.valueOf(songValue[2]));
+        downloadSong.setSongId(songValue[3]);
+        downloadSong.setUrl(fileName + songFileName);
+        res.add(downloadSong);
       }
-      DownloadSong downloadSong = new DownloadSong();
-      downloadSong.setSinger(songValue[0]);
-      downloadSong.setName(songValue[1]);
-      downloadSong.setDuration(Long.valueOf(songValue[2]));
-      downloadSong.setSongId(songValue[3]);
-      downloadSong.setUrl(fileName + songFileName);
-      res.add(downloadSong);
     }
     return res;
   }

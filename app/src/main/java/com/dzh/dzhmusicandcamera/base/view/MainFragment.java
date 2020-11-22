@@ -137,6 +137,7 @@ public class MainFragment extends Fragment {
       mDownloadMusicNum.setText(String.valueOf(DownloadUtil.getSongFromFile(Api.STORAGE_SONG_FILE).size()));
     }
   }
+
   // 显示数目
   private void showMusicNum() {
     mLocalMusicNum.setText(String.valueOf(LitePal.findAll(LocalSong.class).size()));
@@ -145,6 +146,7 @@ public class MainFragment extends Fragment {
     mDownloadMusicNum
         .setText(String.valueOf(DownloadUtil.getSongFromFile(Api.STORAGE_SONG_FILE).size()));
   }
+
   // 使数据库中的列表逆序排列
   private List<AlbumCollection> orderCollection(List<AlbumCollection> tempList) {
     List<AlbumCollection> albumCollectionList = new ArrayList<>();

@@ -16,7 +16,7 @@
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
             android:layout_centerVertical="true"
-            android:src="@drawable/jay"
+            android:src="@drawable/ic_potrait"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:scaleType="centerCrop"/>

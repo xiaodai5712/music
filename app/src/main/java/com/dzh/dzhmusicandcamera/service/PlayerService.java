@@ -289,7 +289,7 @@ public class PlayerService extends Service {
           EventBus.getDefault().post(new SongDownloadedEvent()); // 发动下载歌曲改变的消息
         }
         mCurrent = FileUtil.getSong().getPosition();
-        mediaPlayer.release(); // 把各项参数恢复到初始状态
+        mediaPlayer.reset(); // 把各项参数恢复到初始状态
         if (mListType == Constant.LIST_TYPE_LOCAL) {
           mediaPlayer.setDataSource(mLocalSongList.get(mCurrent).getUrl());
           startPlay();
@@ -308,6 +308,7 @@ public class PlayerService extends Service {
         }
       } catch (IOException e) {
         e.printStackTrace();
+        Log.e(TAG, "IOException",e);
       }
     }
 

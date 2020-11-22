@@ -26,7 +26,7 @@ import java.io.ObjectOutputStream;
  */
 public class FileUtil {
   private static final String TAG = "FileUtil";
-  private static final String SONG_FILE_PATH = "/yuanmusic/song.text";
+  private static final String SONG_FILE_PATH = "/yuanmusic/song.txt";
 
   public static void saveSong(Song song) {
     File file = new File(App.getContext().getExternalFilesDir("yuanmusic").getAbsolutePath());
@@ -35,7 +35,7 @@ public class FileUtil {
     }
 
     // 写流对象的对象
-    File userFile = new File(file, "song.text");
+    File userFile = new File(file, "song.txt");
     ObjectOutputStream oos = null;
     try {
       oos = new ObjectOutputStream(new FileOutputStream(userFile));

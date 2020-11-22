@@ -97,7 +97,12 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
   @Override
   public int getItemCount() {
-    return 0;
+    return mMp3InfoList.size() + 1;  // dzh? 这个为什么要加 1
+  }
+
+  @Override
+  public int getItemViewType(int position) {
+    return position + 1 == getItemCount() ? mFooterViewType : mItemViewType;  // dzh? 这个方法有什么用
   }
 
   // 判断点击的是否为上一个点击的项目

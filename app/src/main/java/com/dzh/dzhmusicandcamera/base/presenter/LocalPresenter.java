@@ -27,7 +27,7 @@ public class LocalPresenter extends BasePresenter<ILocalContract.View> implement
   @Override
   public void saveSong(List<LocalSong> localSongs) {
     if (mModel.saveSong(localSongs)) {
-      EventBus.getDefault().post(new SongListNumEvent(Constant.LIST_TYPE_LOCAL));
+      EventBus.getDefault().post(new SongListNumEvent(Constant.LIST_TYPE_LOCAL)); // 通知主界面 更改本地乐音数目
       mView.showToast("成功导入本地音乐");
       mView.showMusicList(localSongs);
     }

@@ -18,9 +18,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import com.andexert.library.RippleView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dzh.dzhmusicandcamera.base.activity.BaseActivity;
 import com.dzh.dzhmusicandcamera.base.entity.Song;
 import com.dzh.dzhmusicandcamera.base.view.MainFragment;
@@ -142,6 +146,7 @@ public class MainActivity extends BaseActivity {
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   protected void initView() {
+    Log.d(TAG, "initView: ");
     EventBus.getDefault().register(this);
     LitePal.getDatabase();
 
@@ -164,24 +169,25 @@ public class MainActivity extends BaseActivity {
       if(mSong.getImgUrl() == null) {
         CommonUtil.setSingerImg(MainActivity.this, mSong.getSinger(), mCoverIv);
       } else {
-        mSongNameTv.setText("随心音乐");
-        mSingerTv.setText("随心跳动， 开启你的音乐旅程");
-        mCoverIv.setImageResource(R.drawable.jay);
+        Glide.with(this)
+            .load(mSong.getImgUrl())
+            .apply(RequestOptions.placeholderOf(R.drawable.welcome))
+            .into(mCoverIv);
       }
-
-      // 如果播放服务还存活
-      if (ServiceUtil.isServiceRunning(this, PlayerService.class.getName())) {
-        mPlayerBtn.setSelected(true);
-        mCircleAnimator.start();
-        isExistService = true;
-      }
-      // 处理服务
-      initService();
-      addMainFragment();
+    } else {
+      mSongNameTv.setText("随心音乐");
+      mSingerTv.setText("随心跳动， 开启你的音乐旅程");
+      mCoverIv.setImageResource(R.drawable.jay);
     }
-
-
-
+    // 如果播放服务还存活
+    if (ServiceUtil.isServiceRunning(this, PlayerService.class.getName())) {
+      mPlayerBtn.setSelected(true);
+      mCircleAnimator.start();
+      isExistService = true;
+    }
+    // 处理服务
+    initService();
+    addMainFragment();
   }
 
   @Override
@@ -198,23 +204,6 @@ public class MainActivity extends BaseActivity {
   private void seekBarStart() {
     mSeekBarThread = new Thread(new SeekBarThread() );
     mSeekBarThread.start();
-  }
-
-  class SeekBarThread implements Runnable {
-
-    @Override
-    public void run() {
-      if (mPlayStatusBinder != null) {
-        while (!isChange && mPlayStatusBinder.isPlaying()) {
-          mSeekBar.setProgress((int) mPlayStatusBinder.getCurrentTime());
-          try {
-            Thread.sleep(1000);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-        }
-      }
-    }
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)
@@ -237,6 +226,30 @@ public class MainActivity extends BaseActivity {
   }
 
   private void addMainFragment() {
-
+    Log.d(TAG, "addMainFragment: ");
+    MainFragment mainFragment = new MainFragment();
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.add(R.id.fragment_container, mainFragment);
+    transaction.commit();
   }
+
+
+  class SeekBarThread implements Runnable {
+
+    @Override
+    public void run() {
+      if (mPlayStatusBinder != null) {
+        while (!isChange && mPlayStatusBinder.isPlaying()) {
+          mSeekBar.setProgress((int) mPlayStatusBinder.getCurrentTime());
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+  }
+
 }
