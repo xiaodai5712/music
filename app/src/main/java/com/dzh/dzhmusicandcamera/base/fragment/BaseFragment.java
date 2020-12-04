@@ -1,4 +1,4 @@
-package com.dzh.dzhmusicandcamera.base;
+package com.dzh.dzhmusicandcamera.base.fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.dzh.dzhmusicandcamera.base.fragment.BaseLazyFragment;
 import com.dzh.dzhmusicandcamera.base.view.BaseView;
 import com.dzh.dzhmusicandcamera.util.CommonUtil;
 

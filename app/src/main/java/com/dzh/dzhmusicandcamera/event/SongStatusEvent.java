@@ -11,7 +11,7 @@ public class SongStatusEvent {
     mSongStatus = songStatus;
   }
 
-  public int getmSongStatus() {
+  public int getSongStatus() {
     return mSongStatus;
   }
 }

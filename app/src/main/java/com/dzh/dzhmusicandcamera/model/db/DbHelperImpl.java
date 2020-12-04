@@ -25,6 +25,7 @@ import java.util.List;
  * 数据库操作类
  */
 public class DbHelperImpl implements DbHelper {
+
   private static final String TAG = "DzhDbHelperImpl";
   @Override
   public void insertAllAlbumSong(List<AlbumSong.DataBean.ListBean> songList) {

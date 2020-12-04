@@ -29,7 +29,7 @@
 
                 <SeekBar
                     android:id="@+id/sb_progress"
-                    style="@style/neteasa_music_time_seek_bar_style" />
+                    style="@style/netease_music_time_seek_bar_style" />
 
                 <TextView
                     android:id="@+id/tv_song_name"

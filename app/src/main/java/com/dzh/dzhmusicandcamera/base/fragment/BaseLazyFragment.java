@@ -1,4 +1,4 @@
-package com.dzh.dzhmusicandcamera.base;
+package com.dzh.dzhmusicandcamera.base.fragment;
 
 import android.os.Bundle;
 import android.util.Log;

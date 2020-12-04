@@ -103,7 +103,6 @@ public class FileUtil {
         File lrcFile = new File(file, songName + Constant.LRC);
         FileWriter fileWriter = new FileWriter(lrcFile);
         fileWriter.write(lrc);
-        ;
         fileWriter.close();
       } catch (IOException e) {
         e.printStackTrace();

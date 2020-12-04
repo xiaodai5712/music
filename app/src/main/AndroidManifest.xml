@@ -10,12 +10,14 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_label"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_label"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".base.view.WelcomeActivity"
+        <activity android:name=".base.view.main.PlayActivity"></activity>
+        <activity
+            android:name=".base.view.WelcomeActivity"
             android:theme="@style/AppTheme.launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity
+            android:name=".base.view.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <service
             android:name=".service.PlayerService"

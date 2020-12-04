@@ -71,4 +71,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
   public void showToast(String message) {
     CommonUtil.showToast(this, message);
   }
+
+  protected void initClick() {}
 }

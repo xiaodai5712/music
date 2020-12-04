@@ -1,4 +1,4 @@
-package com.dzh.dzhmusicandcamera.base;
+package com.dzh.dzhmusicandcamera.base.fragment;
 
 import com.dzh.dzhmusicandcamera.base.presenter.IPresenter;
 

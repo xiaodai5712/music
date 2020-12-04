@@ -9,15 +9,19 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.dzh.dzhmusicandcamera.MainActivity;
 import com.dzh.dzhmusicandcamera.R;
 import com.dzh.dzhmusicandcamera.app.App;
 import com.dzh.dzhmusicandcamera.util.CommonUtil;
@@ -102,7 +106,15 @@ public class WelcomeActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: " + Environment.getExternalStorageDirectory().getAbsolutePath());
         Log.d(TAG, "onCreate: " + Environment.getExternalStoragePublicDirectory("").getAbsolutePath());
         Log.d(TAG, "onCreate: " + getExternalFilesDir(Environment.DIRECTORY_MUSIC));
+        Log.d(TAG, "test: widthPixels" + this.getApplicationContext().getResources().getDisplayMetrics().widthPixels);
+        Log.d(TAG, "test: highPixels" + this.getApplicationContext().getResources().getDisplayMetrics().heightPixels);
+        Log.d(TAG, "test: density" + this.getApplicationContext().getResources().getDisplayMetrics().density);
+        Log.d(TAG, "test: scaleDensity" + this.getApplicationContext().getResources().getDisplayMetrics().scaledDensity);
 
+        WindowManager manager = this.getWindowManager();
+        int high = manager.getDefaultDisplay().getHeight();
+        int width = manager.getDefaultDisplay().getWidth();
+        Log.d(TAG, "test: with = " + width + ", high = " + high);
         findViewById(R.id.music).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,5 +122,13 @@ public class WelcomeActivity extends AppCompatActivity {
                 playMusic();
             }
         });
+    }
+
+    public class DzhWebClient extends WebChromeClient {
+
+        @Override
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+            return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
+        }
     }
 }

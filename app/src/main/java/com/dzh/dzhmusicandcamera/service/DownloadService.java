@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.dzh.dzhmusicandcamera.MainActivity;
+import com.dzh.dzhmusicandcamera.base.view.MainActivity;
 import com.dzh.dzhmusicandcamera.R;
 import com.dzh.dzhmusicandcamera.app.Api;
 import com.dzh.dzhmusicandcamera.app.Constant;

@@ -65,4 +65,8 @@
     <string name="listen">听</string>
     <string name="me">我</string>
     <string name="welcome_text">随心所动，开启你的音乐之旅</string>
+    <string name="get_cover_lrc">获取封面歌词</string>
+
+    // activity
+    <string name="lrc_not_found">抱歉，没有找到歌词</string>
 </resources>

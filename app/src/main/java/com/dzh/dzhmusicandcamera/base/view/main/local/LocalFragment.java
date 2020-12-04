@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dzh.dzhmusicandcamera.R;
 import com.dzh.dzhmusicandcamera.adapter.SongAdapter;
 import com.dzh.dzhmusicandcamera.app.Constant;
-import com.dzh.dzhmusicandcamera.base.BaseMvpFragment;
+import com.dzh.dzhmusicandcamera.base.fragment.BaseMvpFragment;
 import com.dzh.dzhmusicandcamera.base.entity.LocalSong;
 import com.dzh.dzhmusicandcamera.base.entity.Song;
 import com.dzh.dzhmusicandcamera.base.presenter.LocalPresenter;

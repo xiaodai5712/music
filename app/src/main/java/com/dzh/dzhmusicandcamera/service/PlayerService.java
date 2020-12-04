@@ -16,7 +16,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.dzh.dzhmusicandcamera.MainActivity;
+import com.dzh.dzhmusicandcamera.base.view.MainActivity;
 import com.dzh.dzhmusicandcamera.R;
 import com.dzh.dzhmusicandcamera.app.Api;
 import com.dzh.dzhmusicandcamera.app.Constant;
@@ -43,7 +43,6 @@ import com.dzh.dzhmusicandcamera.util.FileUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.litepal.LitePal;
-import org.litepal.crud.async.UpdateOrDeleteExecutor;
 import org.litepal.crud.callback.SaveCallback;
 
 import java.io.IOException;
@@ -119,6 +118,7 @@ public class PlayerService extends Service {
         saveLocalSongInfo(mCurrent);
       } else if (mListType == Constant.LIST_TYPE_ONLINE) {
         mCurrent = getNextCurrent(mCurrent, mPlayMode, mSongList.size());
+        saveOnlineSongInfo(mCurrent);
       } else if (mListType == Constant.LIST_TYPE_LOVE) {
         mCurrent = getNextCurrent(mCurrent, mPlayMode, mLoveList.size());//根据播放模式来播放下一曲
         saveLoveInfo(mCurrent);
@@ -281,7 +281,7 @@ public class PlayerService extends Service {
           EventBus.getDefault().post(new SongLocalEvent()); // 发送本地歌曲改变事件
         } else if (mListType == Constant.LIST_TYPE_LOVE) {
           mLoveList = orderList(LitePal.findAll(Love.class));
-          EventBus.getDefault().post(new SongCollectionEvent()); // 发送歌曲改变事件
+          EventBus.getDefault().post(new SongCollectionEvent(true)); // 发送歌曲改变事件
         } else if (mListType == Constant.LIST_TYPE_HISTORY) {
           EventBus.getDefault().post(new SongHistoryEvent());
         } else if (mListType == Constant.LIST_TYPE_DOWNLOAD) {
@@ -345,7 +345,7 @@ public class PlayerService extends Service {
     public void resume() {
       if (isPause) {
         mediaPlayer.start();
-        isPause = true;
+        isPlaying = true;  // 纠正之前的错误
         isPause = false;
         EventBus.getDefault().post(new SongStatusEvent(Constant.SONG_RESUME));
       }

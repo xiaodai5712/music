@@ -52,17 +52,35 @@ public class CommonUtil {
       singer = s[0];
     }
     singer = singer.trim();
-    String imgUrl = Api.STORAGE_IMG_FILE;
-    Glide.with(context).load(imgUrl)
+    String imgUrl = Api.STORAGE_IMG_FILE + singer + ".jpg";
+    Glide.with(context)
+        .load(imgUrl)
         .apply(RequestOptions.placeholderOf(R.drawable.welcome))
         .apply(RequestOptions.errorOf(R.drawable.welcome))
         .into(view);
   }
 
   public static void setImgWithGlide(Context context, String imgUrl, ImageView view) {
-    Glide.with(context).load(imgUrl)
+    Glide.with(context)
+        .load(imgUrl)
         .apply(RequestOptions.placeholderOf(R.drawable.welcome))
         .apply(RequestOptions.errorOf(R.drawable.love))
         .into(view);
+  }
+
+  // 得到屏幕的宽度
+  public static int getScreenWidth(Context context) {
+    if (context == null) {
+      return 0;
+    }
+    return context.getResources().getDisplayMetrics().widthPixels;
+  }
+
+  // 得到屏幕的高度
+  public static int getScreenHeight(Context context) {
+    if (context == null) {
+      return 0;
+    }
+    return context.getResources().getDisplayMetrics().heightPixels;
   }
 }

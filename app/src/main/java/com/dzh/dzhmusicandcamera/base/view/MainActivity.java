@@ -1,7 +1,8 @@
-package com.dzh.dzhmusicandcamera;
+package com.dzh.dzhmusicandcamera.base.view;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.ActivityOptions;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -20,15 +21,17 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import com.andexert.library.RippleView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.dzh.dzhmusicandcamera.R;
+import com.dzh.dzhmusicandcamera.app.Constant;
 import com.dzh.dzhmusicandcamera.base.activity.BaseActivity;
 import com.dzh.dzhmusicandcamera.base.entity.Song;
-import com.dzh.dzhmusicandcamera.base.view.MainFragment;
+import com.dzh.dzhmusicandcamera.base.view.main.PlayActivity;
 import com.dzh.dzhmusicandcamera.event.OnlineSongErrorEvent;
+import com.dzh.dzhmusicandcamera.event.SongStatusEvent;
 import com.dzh.dzhmusicandcamera.service.DownloadService;
 import com.dzh.dzhmusicandcamera.service.PlayerService;
 import com.dzh.dzhmusicandcamera.util.CommonUtil;
@@ -153,7 +156,7 @@ public class MainActivity extends BaseActivity {
     // 设置属性动画
     mCircleAnimator =
         ObjectAnimator.ofFloat(mCoverIv, "rotation", 0.0f, 360.0f);
-    mCircleAnimator.setDuration(3000);
+    mCircleAnimator.setDuration(30000);
     mCircleAnimator.setInterpolator(new LinearInterpolator()); // 这句要是不写的话，好像默认是线性插值器
     mCircleAnimator.setRepeatCount(ValueAnimator.INFINITE);
     mCircleAnimator.setRepeatMode(ValueAnimator.RESTART);
@@ -197,7 +200,99 @@ public class MainActivity extends BaseActivity {
 
   @Override
   protected void onClick() {
+    // 进度条的时间监听
+    mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      @Override
+      public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
+      }
+
+      @Override
+      public void onStartTrackingTouch(SeekBar seekBar) {
+        // 防止在拖动进度条进行进度设置时与Thread更新播放进度条冲突
+        isChange = true;
+      }
+
+      @Override
+      public void onStopTrackingTouch(SeekBar seekBar) {
+        if (mPlayStatusBinder.isPlaying()) {
+          mPlayStatusBinder.getMediaPlayer().seekTo(seekBar.getProgress() * 1000);
+        } else {
+          time = seekBar.getProgress();
+          isSeek = true;
+        }
+        isChange = false;
+        seekBarStart();
+      }
+    });
+
+    // 控制按钮，播放，暂停
+    mPlayerBtn.setOnClickListener(v -> {
+      mMediaPlayer = mPlayStatusBinder.getMediaPlayer();
+      if (mPlayStatusBinder.isPlaying()) {
+        time = mMediaPlayer.getCurrentPosition();
+        mPlayStatusBinder.pause();
+        flag = true; // 这个变量命取得不好， 没有意义，不知道是干啥的
+      } else if (flag) {
+        mPlayStatusBinder.resume();
+        if (isSeek) {
+          mMediaPlayer.seekTo(time * 1000);
+          isSeek = false;
+        }
+      } else {  // 退出程序后重新打开的情况
+        if (FileUtil.getSong().isOnline()) {
+          mPlayStatusBinder.playOnline();
+        } else {
+          mPlayStatusBinder.play(FileUtil.getSong().getListType());
+        }
+        mMediaPlayer = mPlayStatusBinder.getMediaPlayer();
+        mMediaPlayer.seekTo((int) mSong.getCurrentTime() * 1000);
+      }
+    });
+
+    // 下一首
+    mNextIv.setOnClickListener(v -> {
+      if (FileUtil.getSong().getSongName() != null) {
+        mPlayStatusBinder.next();
+      }
+      if (mPlayStatusBinder.isPlaying()) {
+        mPlayerBtn.setSelected(true);
+      } else {
+        mPlayerBtn.setSelected(false);
+      }
+    });
+
+    // 点击播放栏, 跳转到播放的主界面
+    mLinear.setOnClickListener(v -> {
+      if (FileUtil.getSong() != null) {
+        Intent toPlayActivityIntent
+            = new Intent(MainActivity.this, PlayActivity.class);
+        // 播放情况
+        if (mPlayStatusBinder.isPlaying()) {
+          Song song = FileUtil.getSong();
+          song.setCurrentTime(mPlayStatusBinder.getCurrentTime());
+          FileUtil.saveSong(song);
+          toPlayActivityIntent.putExtra(Constant.PLAYER_STATUS, Constant.SONG_PLAY);
+        } else {
+          // 暂停情况
+          Song song = FileUtil.getSong();
+          song.setCurrentTime(mSeekBar.getProgress());
+          FileUtil.saveSong(song);
+        }
+        if (FileUtil.getSong().getImgUrl() != null) {
+//          toPlayActivityIntent.putExtra()
+        }
+        // 如果版本大于21
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          startActivity(toPlayActivityIntent, ActivityOptions
+              .makeSceneTransitionAnimation(MainActivity.this).toBundle());
+        } else {
+          startActivity(toPlayActivityIntent);
+        }
+      } else {
+        showToast("随心跳动， 开启你的音乐旅程");
+      }
+    });
   }
 
 
@@ -209,6 +304,37 @@ public class MainActivity extends BaseActivity {
   @Subscribe(threadMode = ThreadMode.MAIN)
   public void onOnlineSongErrorEvent(OnlineSongErrorEvent event) {
     showToast(getString(R.string.error_out_of_copyright));
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void onSongStatusEvent(SongStatusEvent event) {
+    int status = event.getSongStatus();
+    if (status == Constant.SONG_RESUME) {
+      mPlayerBtn.setSelected(true);
+      mCircleAnimator.removeAllListeners();
+      seekBarStart();
+    } else if (status == Constant.SONG_PAUSE) {
+      mPlayerBtn.setSelected(false);
+      mCircleAnimator.pause();
+    } else if (status == Constant.SONG_CHANGE) {
+      mSong = FileUtil.getSong();
+      mSongNameTv.setText(mSong.getSongName());
+      mSingerTv.setText(mSong.getSinger());
+      mSeekBar.setMax((int) mSong.getDuration());
+      mPlayerBtn.setSelected(true);
+      mCircleAnimator.start();
+      seekBarStart();
+      if (!mSong.isOnline()) {
+        CommonUtil.setSingerImg(MainActivity.this, mSong.getSinger(), mCoverIv);
+      } else {
+        Glide.with(MainActivity.this)
+            .load(mSong.getImgUrl())
+            .apply(RequestOptions.placeholderOf(R.drawable.welcome))
+            .apply(RequestOptions.errorOf(R.drawable.welcome))
+            .into(mCoverIv);
+      }
+    }
+
   }
   private void initService() {
     // 启动服务
