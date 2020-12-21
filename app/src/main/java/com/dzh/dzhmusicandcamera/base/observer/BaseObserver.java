@@ -89,7 +89,7 @@ public class BaseObserver<T> extends ResourceObserver<T> {
 
   // 未知错误
   protected void unknown() {
-    mBaseView.showToast("位置错误");
+    mBaseView.showToast("未知错误");
   }
 
   // 解析错误

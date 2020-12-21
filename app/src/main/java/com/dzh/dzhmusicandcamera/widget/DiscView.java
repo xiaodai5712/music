@@ -85,7 +85,8 @@ public class DiscView extends RelativeLayout {
   private void initNeedle() {
     mIvNeedle = findViewById(R.id.iv_needle);
 
-    int needleWidth = (int) (DisplayUtil.SCALE_NEEDLE_WIDTH * mScreenHeight  );
+    // dzh! 之前唱针UI不协调的问题出现在这里, 把mScreenWidth, 写成了mScreenHeight
+    int needleWidth = (int) (DisplayUtil.SCALE_NEEDLE_WIDTH * mScreenWidth );
     int needleHeight = (int) (DisplayUtil.SCALE_NEEDLE_HEIGHT * mScreenHeight);
 
     // 设置手柄的外边距为负数， 让其隐藏一部分
@@ -160,7 +161,7 @@ public class DiscView extends RelativeLayout {
     // dzh 这里使用了 文档建议的方法，可能会出问题
     BitmapDrawable discDrawable = new BitmapDrawable(getResources(), bitmapDisc);
     RoundedBitmapDrawable roundMusicDrawable = RoundedBitmapDrawableFactory
-        .create(getResources(), bitmapDisc);
+        .create(getResources(), bitmapMusicPic); // dhz! 这里之前抄错了，导致唱盘的图片显示不对, 写成了 bitmapDisc
 
     // 抗锯齿
     discDrawable.setAntiAlias(true);

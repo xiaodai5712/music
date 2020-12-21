@@ -77,6 +77,7 @@ public class LrcView extends View {
         = typedArray.getDimensionPixelSize(R.styleable.LrcView_lrcTextSize, (int) (16 * fontScale));
     mLineSpace = typedArray.getDimensionPixelSize(R.styleable.LrcView_lineSapce, (int) (30 * scale));
     typedArray.recycle();
+    init(); // dzh! 这里忘了
   }
 
   private void init() {

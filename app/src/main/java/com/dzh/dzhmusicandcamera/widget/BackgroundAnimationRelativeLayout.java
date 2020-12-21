@@ -27,6 +27,7 @@ public class BackgroundAnimationRelativeLayout extends RelativeLayout {
 
   private LayerDrawable mLayerDrawable;
   private ObjectAnimator mObjectAnimator;
+
   public BackgroundAnimationRelativeLayout(Context context) {
     this(context, null);
   }

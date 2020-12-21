@@ -24,7 +24,7 @@ public class LrcUtil {
     // 跳过前四行， 从第五行开始，因为前四行的歌词我们并不需要
     for (int i = 5; i < subLrc.length; i++) {
       String lineLrc = subLrc[i];
-      String min = lineLrc.substring(lineLrc.indexOf("[") + 1, lineLrc.indexOf("[" + 3));
+      String min = lineLrc.substring(lineLrc.indexOf("[") + 1, lineLrc.indexOf("[") + 3); // dzh! 这里 3 写在前面的括号里面了
       String sec = lineLrc.substring(lineLrc.indexOf(":") + 1, lineLrc.indexOf(":") + 3);
       String mills = lineLrc.substring(lineLrc.indexOf(".") + 1, lineLrc.indexOf(".") + 3);
       // 进制转化， 转化成毫秒形式的时间

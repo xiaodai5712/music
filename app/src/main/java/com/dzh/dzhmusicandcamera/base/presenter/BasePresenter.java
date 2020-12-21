@@ -21,7 +21,6 @@ import io.reactivex.disposables.Disposable;
 public class BasePresenter<T extends BaseView> implements IPresenter<T> {
 
   protected T mView;
-  private RecyclerView recyclerView;
   protected DataModel mModel;
 
   private CompositeDisposable mCompositeDisposable;

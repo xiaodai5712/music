@@ -109,8 +109,6 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
   Button mPlayModeBtn;
   @BindView(R.id.btn_last)
   Button mLastBtn;
-  @BindView(R.id.btn_player)
-  Button mPlayBtn;
   @BindView(R.id.linear_control)
   LinearLayout linearControl;
   @BindView(R.id.relative_control)
@@ -118,9 +116,10 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
   @BindView(R.id.relative_root)
   BackgroundAnimationRelativeLayout mRootLayout;
 
-  DiscView mDisc;
-  Button mNextBtn;
-  Button mLoveBtn;
+  private DiscView mDisc;
+  private Button mNextBtn;
+  private Button mLoveBtn;
+  private Button mPlayBtn;
 
   private PlayPresenter mPresenter;
 
@@ -222,6 +221,7 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
     mNextBtn = findViewById(R.id.next);
     mDisc = findViewById(R.id.disc_view);
     mLoveBtn = findViewById(R.id.btn_love);
+    mPlayBtn = findViewById(R.id.btn_player);
     EventBus.getDefault().register(this);
     // 设置进入 退出动画
     getWindow().setEnterTransition(new Slide());
@@ -262,7 +262,6 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
     // 返回按钮
     mBackIv.setOnClickListener(v -> finish());
     // 获取本地音乐的图片和歌词
-    mGetImgAndLrcBtn.setClickable(true);
     mGetImgAndLrcBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -398,7 +397,6 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_play);
     initClick();
   }
 
@@ -432,7 +430,7 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
 
   @Override
   public void getSingerAndLrc() {
-    Log.d(TAG, "getSingerAndLrc: ");
+    Log.d(TAG, "getSingerAndLrc: " + "singerName : " + getSingerName() + ", songName : " + getSongName() + ", duration : " + mSong.getDuration() );
     mGetImgAndLrcBtn.setText("正在获取……");
     mPresenter.getSingerImg(getSingerName(), getSongName(), mSong.getDuration());
   }
@@ -591,10 +589,10 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
 
   private Drawable getForegroundDrawable(Bitmap bitmap) {
     // 得到屏幕的宽高比，以便按比例切割图片的一部分
-    float widthHeightRatio = (float) (DisplayUtil.getScreenWidth(PlayActivity.this)
-        / DisplayUtil.getScreenHeight(PlayActivity.this));
+    float widthHeightRatio = (float) (DisplayUtil.getScreenWidth(PlayActivity.this) * 1.0
+        / DisplayUtil.getScreenHeight(PlayActivity.this) * 1.0);
     int cropBitmapWidth = (int) (widthHeightRatio * bitmap.getHeight());
-    int cropBitmapWidthX = (int) ((bitmap.getWidth() - cropBitmapWidth) / 2);
+    int cropBitmapWidthX = (int) ((bitmap.getWidth() - cropBitmapWidth) / 2.0);
     // 切割部分图片
     Bitmap cropBitmap = Bitmap.createBitmap(bitmap, cropBitmapWidthX, 0, cropBitmapWidth
         , bitmap.getHeight());

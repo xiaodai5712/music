@@ -1,5 +1,7 @@
 package com.dzh.dzhmusicandcamera.presenter;
 
+import android.util.Log;
+
 import com.dzh.dzhmusicandcamera.app.Constant;
 import com.dzh.dzhmusicandcamera.base.entity.OnlineSongLrc;
 import com.dzh.dzhmusicandcamera.base.entity.SearchSong;
@@ -13,7 +15,9 @@ import com.dzh.dzhmusicandcamera.model.https.api.RetrofitFactory;
 import java.util.List;
 
 import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,18 +27,21 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PlayPresenter extends BasePresenter<IPlayContract.View>
     implements IPlayContract.Presenter {
-
+  private static final String TAG = "DzhPlayPresenter";
   @Override
   public void getSingerImg(String singer, String song, long duration) {
+    Log.d(TAG, "getSingerImg: ");
     addRxSubscribe(
-        RetrofitFactory.createRequestOfSinger() .getSingerImg(singer)
+        RetrofitFactory.createRequestOfSinger().getSingerImg(singer)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeWith()
             .doOnNext(singerImg ->
                 mView.setSingerImg(singerImg.getResult().getArtists().get(0).getImg1v1Url()))
             .doOnError(SingerImg -> mView.showToast("获取不到歌手图片"))
             .observeOn(Schedulers.io())
-            .flatMap((Function<SingerImg, ObservableSource<SearchSong>>) singerImg -> RetrofitFactory.createRequest().search(song, 1))
+            .flatMap((Function<SingerImg, ObservableSource<SearchSong>>)
+                singerImg -> RetrofitFactory.createRequest().search(song, 1))
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new BaseObserver<SearchSong>(mView) {
               @Override
@@ -81,6 +88,7 @@ public class PlayPresenter extends BasePresenter<IPlayContract.View>
     addRxSubscribe(
         mModel.search(song, 1)
               .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
               .subscribeWith(new BaseObserver<SearchSong>(mView, true, true) {
                 @Override
                 public void onNext(SearchSong value) {
