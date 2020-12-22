@@ -10,7 +10,7 @@ public class MediaUtil {
 
   public static String formatTime(long time) {
     String min = time / 60 + "";
-    String sec = time / 60 + "";
+    String sec = time % 60 + "";  // dzh! 这里把 % 写成了 / 导致seekBar的秒数显示错误
     if (sec.length() < 2) {
       sec = "0" + sec;
     }

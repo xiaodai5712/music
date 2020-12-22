@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class LrcView extends View {
 
-  private static final String TAG = "LyricView";
+  private static final String TAG = "DzhLyricView";
   private static final int REFRESH_DELAY_IN_MILLS = 100;
 
   private List<LrcBean> mLrcBeanList; // 歌词集合
@@ -69,7 +70,7 @@ public class LrcView extends View {
     TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LrcView);
     mHighLightTextColor
         = typedArray.getColor(R.styleable.LrcView_highLightLineTextColor, Color.GRAY);
-    mDefaultTextColor = typedArray.getColor(R.styleable.LrcView_defaultTextColor, Color.BLUE);
+    mDefaultTextColor = typedArray.getColor(R.styleable.LrcView_defaultTextColor, Color.GRAY);
     float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
     float scale = context.getResources().getDisplayMetrics().density;
     // 默认字体大小 16sp
@@ -101,7 +102,7 @@ public class LrcView extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
-
+    Log.d(TAG, "onDraw: ");
     // 得到测量后的宽高
     if (mWidth == 0 || mHeight == 0) {
       mWidth = getMeasuredWidth();
@@ -117,8 +118,10 @@ public class LrcView extends View {
   // 获取当前歌词的位置
   private void getCurrentPosition() {
     int curTime = mPlayer.getCurrentPosition();
+    Log.d(TAG, "getCurrentPosition: curTime = " + curTime);
     // 如果当前的时间大于10分钟，证明歌曲未播放，
-    if (curTime > mLrcBeanList.get(0).getStart() || curTime > 10 * 60 * 1000) {
+    /* dzh! 这里把 < 写成了 >  ,导致 mCurrentPosition 一直不能更新*/
+    if (curTime < mLrcBeanList.get(0).getStart() || curTime > 10 * 60 * 1000) {
       mCurrentPosition = 0;
       return;
     } else if (curTime > mLrcBeanList.get(mLrcBeanList.size() - 1).getStart()) {
@@ -134,12 +137,14 @@ public class LrcView extends View {
 
   // 画歌词，第一句从正中间开始，以后的歌词递增行间距，并开始画
   private void drawLrc(Canvas canvas) {
+    Log.d(TAG, "drawLrc: ");
     for (int i = 0; i < mLrcBeanList.size(); i++) {
       float x = mWidth / 2;
       float y = mHeight / 2 + i * mLineSpace;
       if (mCurrentPosition == i) {
         // 使用高亮画笔画歌词
         canvas.drawText(mLrcBeanList.get(i).getLrc(), x, y, mHighLightPaint);
+        Log.d(TAG, "drawLrc: " + mLrcBeanList.get(i).getLrc());
       } else {
         canvas.drawText(mLrcBeanList.get(i).getLrc(), x, y, mDefaultPaint);
       }
@@ -148,6 +153,7 @@ public class LrcView extends View {
 
   // 歌词滑动
   private void scrollLrc() {
+    Log.d(TAG, "scrollLrc: ");
     // 下一句歌词开始的时间
     long startTime = mLrcBeanList.get(mCurrentPosition).getStart();
     long curTime = mPlayer.getCurrentPosition();

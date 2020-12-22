@@ -2,6 +2,7 @@ package com.dzh.dzhmusicandcamera.base.view.main;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -148,6 +149,7 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
   private PlayerService.PlayStatusBinder mPlayStatusBinder;
   private DownloadService.DownloadBinder mDownloadBinder;
 
+  @SuppressLint("HandlerLeak")
   private Handler mMusicHandler = new Handler() {
     @Override
     public void handleMessage(@NonNull Message msg) {
@@ -155,6 +157,7 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
       if (!mIsChange) {
         mSeekBar.setProgress((int) mPlayStatusBinder.getCurrentTime());
         mCurrentTimeTv.setText(MediaUtil.formatTime(mSeekBar.getProgress()));
+        startUpdateSeekBarProgress();
       }
     }
   };
@@ -166,7 +169,6 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
       // 播放模式
       mPlayMode = mPresenter.getPlayMode(); // 获取播放模式
       mPlayStatusBinder.setPlayMode(mPlayMode);
-
       mIsOnline = FileUtil.getSong().isOnline();
       if (mIsOnline) {
         mGetImgAndLrcBtn.setVisibility(View.GONE);
