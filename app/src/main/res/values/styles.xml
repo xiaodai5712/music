@@ -31,4 +31,12 @@
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
+    <style name="MyTabLayoutStyle" parent="android:Widget">
+        <item name="tabBackground">@color/tab</item>
+        <item name="tabIndicatorColor">@color/yellow</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
+        <item name="tabSelectedTextColor">@color/yellow</item>
+    </style>
+
 </resources>

@@ -24,6 +24,7 @@ import com.dzh.dzhmusicandcamera.base.entity.HistorySong;
 import com.dzh.dzhmusicandcamera.base.entity.LocalSong;
 import com.dzh.dzhmusicandcamera.base.entity.Love;
 import com.dzh.dzhmusicandcamera.base.view.main.local.LocalFragment;
+import com.dzh.dzhmusicandcamera.base.view.search.AlbumContentFragment;
 import com.dzh.dzhmusicandcamera.event.AlbumCollectionEvent;
 import com.dzh.dzhmusicandcamera.event.SongListNumEvent;
 import com.dzh.dzhmusicandcamera.util.DownloadUtil;
@@ -159,6 +160,8 @@ public class MainFragment extends Fragment {
   private void onClick() {
     // 本地音乐
     mLocalMusicLinearLayout.setOnClickListener(v -> replaceFragment(new LocalFragment()));
+    // 搜索
+    mSeekBtn.setOnClickListener(v -> replaceFragment(new AlbumContentFragment.SearchFragment()));
   }
 
   private void replaceFragment(Fragment fragment) {
