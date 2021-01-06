@@ -87,7 +87,7 @@ public class SearchHistoryFragment extends Fragment {
     } else {
       mRecycler.setVisibility(View.VISIBLE);
     }
-    for (int i = mTempList.size(); i >= 0; i--) {
+    for (int i = mTempList.size() - 1; i >= 0; i--) {
       SearchHistory searchHistory = mTempList.get(i);
       mSearchHistoryList.add(searchHistory);
     }

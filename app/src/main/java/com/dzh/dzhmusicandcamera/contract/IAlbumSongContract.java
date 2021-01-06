@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IAlbumSongContract {
   interface View extends BaseView {
-    void setAlbumSongList(List<AlbumSong.DataBean.ListBean> dataBean); // 成功获取专辑歌曲后填充列表
+    void setAlbumSongList(List<AlbumSong.DataBean.ListBean> songList); // 成功获取专辑歌曲后填充列表
     void showAlbumSongError(); // 获取专辑失败
     void showAlbumMessage(String name, String language, String company, String albumType
         , String desc); // 展示专辑详情

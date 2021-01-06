@@ -2,12 +2,12 @@
 <litepal>
     <dbname value="SongList" />
 
-    <version value="27" />
+    <version value="28" />
 
     <list>
         <mapping class="com.dzh.dzhmusicandcamera.base.entity.OnlineSong" />
         <mapping class="com.dzh.dzhmusicandcamera.base.entity.LocalSong" />
-<!--        <mapping class="com.dzh.dzhmusicandcamera.base.entity.SearchHistory" />-->
+        <mapping class="com.dzh.dzhmusicandcamera.base.entity.SearchHistory" />
         <mapping class="com.dzh.dzhmusicandcamera.base.entity.Love" />
         <mapping class="com.dzh.dzhmusicandcamera.base.entity.HistorySong" />
         <mapping class="com.dzh.dzhmusicandcamera.base.entity.AlbumCollection" />

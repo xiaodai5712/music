@@ -37,6 +37,7 @@ public class SearchFragment extends Fragment {
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
       , @Nullable Bundle savedInstanceState) {
+
     View view = inflater.inflate(R.layout.fragment_search, container, false);
     mSeekEdit = view.findViewById(R.id.edit_seek);
     mSeekTv = view.findViewById(R.id.tv_search);

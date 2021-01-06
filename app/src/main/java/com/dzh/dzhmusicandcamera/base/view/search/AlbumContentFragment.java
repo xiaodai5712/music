@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,13 +124,13 @@ public class AlbumContentFragment extends Fragment {
     // 返回键的监听
     mToolbar
         .setNavigationOnClickListener( v -> getActivity().getSupportFragmentManager().popBackStack());
-    mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter() {
+    mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager(), 1) {
       @NonNull
       @Override
       public Fragment getItem(int position) {
         switch (position) {
           case 0:
-            return AlbumSongFragment.newInstance(AlbumSongFagment.ALBUM_SONG, mId, mPublicTime);
+            return AlbumSongFragment.newInstance(AlbumSongFragment.ALBUM_SONG, mId, mPublicTime);
           case 1:
             return AlbumSongFragment.newInstance(AlbumSongFragment.ALBUM_INFORMATION, mId, mPublicTime);
           default:
@@ -187,6 +189,14 @@ public class AlbumContentFragment extends Fragment {
         break;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    inflater.inflate(R.menu.love, menu);
+    mLoveBtn = menu.findItem(R.id.btn_love);
+    showLove();
+    super.onCreateOptionsMenu(menu, inflater);
   }
 
   private void showLove() {
