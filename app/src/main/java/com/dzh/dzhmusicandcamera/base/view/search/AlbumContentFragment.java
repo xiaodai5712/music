@@ -123,8 +123,10 @@ public class AlbumContentFragment extends Fragment {
 
     // 返回键的监听
     mToolbar
-        .setNavigationOnClickListener( v -> getActivity().getSupportFragmentManager().popBackStack());
-    mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager(), 1) {
+        .setNavigationOnClickListener( v ->
+            getActivity().getSupportFragmentManager().popBackStack());
+    mViewPager.getViewPager().setAdapter(
+        new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager(), 1) {
       @NonNull
       @Override
       public Fragment getItem(int position) {
@@ -132,7 +134,8 @@ public class AlbumContentFragment extends Fragment {
           case 0:
             return AlbumSongFragment.newInstance(AlbumSongFragment.ALBUM_SONG, mId, mPublicTime);
           case 1:
-            return AlbumSongFragment.newInstance(AlbumSongFragment.ALBUM_INFORMATION, mId, mPublicTime);
+            return AlbumSongFragment
+                .newInstance(AlbumSongFragment.ALBUM_INFORMATION, mId, mPublicTime);
           default:
             return null;
         }
@@ -232,6 +235,4 @@ public class AlbumContentFragment extends Fragment {
       mPublicTime = bundle.getString(Constant.PUBLIC_TIME_KEY);
     }
   }
-
-
 }
