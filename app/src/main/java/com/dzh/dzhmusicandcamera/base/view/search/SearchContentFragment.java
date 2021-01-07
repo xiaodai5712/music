@@ -90,13 +90,11 @@ public class SearchContentFragment extends BaseLoadingFragment<SearchContentPres
     }
   };
 
-  @Nullable
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View view =  super.onCreateView(inflater, container, savedInstanceState);
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
     mRecycler = view.findViewById(R.id.normalView);
     mBackgroundIv = view.findViewById(R.id.iv_background);
-    return view;
   }
 
   @Override

@@ -56,7 +56,7 @@ public abstract class BaseFragment extends BaseLazyFragment implements BaseView 
 
   @Override
   protected void lazyLoadData() {
-
+    loadData(); // dzh! 之前点击搜索时，没有结果是因为这里没有调用loadData去执行搜索的方法
   }
 
   @Override
