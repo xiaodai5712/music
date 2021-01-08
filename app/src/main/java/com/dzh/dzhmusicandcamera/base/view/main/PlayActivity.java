@@ -624,7 +624,6 @@ public class PlayActivity extends BaseMvpActivity<PlayPresenter> implements IPla
     if (event.getSongStatus() == Constant.SONG_CHANGE) {
       mDisc.setVisibility(View.VISIBLE);
       mLrcView.setVisibility(View.VISIBLE);
-      mLrcView.setVisibility(View.GONE);
       mSong = FileUtil.getSong();
       mSongTv.setText(mSong.getSongName());
       mSingerTv.setText(mSong.getSinger());

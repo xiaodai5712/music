@@ -325,7 +325,8 @@ public class PlayerService extends Service {
         EventBus.getDefault().post(new SongStatusEvent(Constant.SONG_CHANGE));
         // 改变通知栏歌曲
         Song song = FileUtil.getSong();
-        getNotificationManager().notify(NOTIFICATION_ID, getNotification(song.getSongName() + "-" + song.getSinger()));
+        getNotificationManager().notify(NOTIFICATION_ID, getNotification(song.getSongName()
+            + "-" + song.getSinger()));
       } catch (Exception e) {
         EventBus.getDefault().post(new OnlineSongErrorEvent());
         e.printStackTrace();

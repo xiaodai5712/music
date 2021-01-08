@@ -136,8 +136,7 @@ public class SearchContentPresenter extends BasePresenter<ISearchContentContract
                   if (purl.equals("")) {
                     mView.showToast("该歌曲暂时没有版权， 搜索其他歌曲吧");
                   } else {
-                    mView
-                        .getSongUrlSuccess(song, sip + purl);
+                    mView.getSongUrlSuccess(song, sip + purl);
                   }
                 } else {
                   mView.showToast(value.getCode() + ": 获取不到歌曲播放地址");

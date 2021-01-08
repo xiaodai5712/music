@@ -73,7 +73,8 @@ public class BaseObserver<T> extends ResourceObserver<T> {
     } else if (e instanceof HttpException) {
       Log.e(TAG_ERROR, "http错误：" + e.getMessage());
       httpError();
-    } else if (e instanceof JsonParseException || e instanceof JSONException || e instanceof ParseException) {
+    } else if (e instanceof JsonParseException || e instanceof JSONException
+        || e instanceof ParseException) {
       Log.e(TAG_ERROR, "解析错误：" + e.getMessage());
       parseError();
     }else {
