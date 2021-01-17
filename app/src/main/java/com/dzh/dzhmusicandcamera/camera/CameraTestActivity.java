@@ -66,7 +66,6 @@ public class CameraTestActivity extends AppCompatActivity {
     mDeleteButton.setOnClickListener(v -> {
       deletePhoto(mFilePath);
     });
-    Intent intent = new Intent();
   }
 
   private void deletePhoto(String uri) {
