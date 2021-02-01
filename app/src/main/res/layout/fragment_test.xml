@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/test_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.dzh.dzhmusicandcamera.camera.view.CustomView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/colorAccent"
+        android:foreground="@color/black"/>
+    <ImageButton
+        android:id="@+id/target"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:foreground="@drawable/ic_count_down_3_black"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_count_down_5_black"/>
+
+    <Button
+        android:id="@+id/scroll_up"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="scroll_up"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/scroll_down"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/scroll_up"
+        android:text="scroll_down"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/translation_up"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/scroll_down"
+        android:text="translation_up"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/translation_down"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/translation_up"
+        android:text="translation_down"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

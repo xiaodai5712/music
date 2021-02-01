@@ -70,4 +70,8 @@
     // activity
     <string name="lrc_not_found">抱歉，没有找到歌词</string>
 
+    // camera 部分
+    <string name="photo_size">画幅</string>
+    <string name="count_down">倒计时</string>
+
 </resources>

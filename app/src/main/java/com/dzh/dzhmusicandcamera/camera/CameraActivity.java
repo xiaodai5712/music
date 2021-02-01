@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 
 import com.dzh.dzhmusicandcamera.R;
 import com.dzh.dzhmusicandcamera.camera.fragments.TakePictureFragment;
+import com.dzh.dzhmusicandcamera.camera.fragments.TestFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class CameraActivity extends AppCompatActivity {
     Log.d(TAG, "initViews: ");
     mFragmentList = new ArrayList<>();
     mFragmentList.add(new TakePictureFragment());
+    mFragmentList.add(new TestFragment());
     mViewPager = findViewById(R.id.view_pager);
     mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
     mViewPager.setAdapter(mPagerAdapter);

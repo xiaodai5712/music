@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_action_action_bar_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/camera_bottom_action_bar_root_height"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mode_selection_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/album_Btn"
+            android:layout_width="@dimen/camera_action_bar_album_view_dimen"
+            android:layout_height="@dimen/camera_action_bar_album_view_dimen"
+            android:layout_marginStart="25dp"
+            android:src="@drawable/icon_album_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/capture_btn"
+            android:layout_width="@dimen/camera_action_bar_album_capture_view_dimen"
+            android:layout_height="@dimen/camera_action_bar_album_capture_view_dimen"
+            android:src="@drawable/icon_capture_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/change_camera_btn"
+            app:layout_constraintStart_toEndOf="@+id/album_Btn"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/change_camera_btn"
+            android:layout_width="@dimen/camera_action_bar_album_view_dimen"
+            android:layout_height="@dimen/camera_action_bar_album_view_dimen"
+            android:src="@drawable/icon_chanage_camera_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="25dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+</LinearLayout>

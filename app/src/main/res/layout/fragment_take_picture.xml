@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/take_picture_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,4 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/camera_top_action_bar"
+            layout="@layout/camera_top_action_bar"/>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scroll_menu"
+            layout="@layout/camera_scroll_menu"
+            android:layout_marginTop="-180dp"
+            android:layout_below="@+id/camera_top_action_bar"/>
+
+        <include
+            android:id="@+id/camera_bottom_action_bar"
+            layout="@layout/camera_bottom_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/camera_bottom_action_bar_root_height"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+
+</FrameLayout>

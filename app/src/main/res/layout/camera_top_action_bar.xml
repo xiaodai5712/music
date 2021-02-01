@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/camera_top_action_bar_root_height"
+    android:orientation="horizontal"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/flash_ctrl_img"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:src="@drawable/ic_flash_auto"/>
+    <ImageView
+        android:id="@+id/hdr_img"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:paddingVertical="5dp"
+
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_hdr_auto"/>
+
+    <ImageView
+        android:id="@+id/ai_img"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:paddingVertical="5dp"
+
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_ai"/>
+
+    <ImageView
+        android:id="@+id/filter_img"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:paddingVertical="5dp"
+
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_filter"/>
+
+    <ImageView
+        android:id="@+id/setting_img"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:src="@drawable/ic_setting"/>
+</LinearLayout>
