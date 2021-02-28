@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/scroll_menu"
             layout="@layout/camera_scroll_menu"
-            android:layout_marginTop="-180dp"
             android:layout_below="@+id/camera_top_action_bar"/>
 
         <include

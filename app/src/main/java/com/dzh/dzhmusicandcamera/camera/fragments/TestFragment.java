@@ -29,11 +29,7 @@ public class TestFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     Log.d(TAG, "onCreateView: ");
     View view =  inflater.inflate(R.layout.fragment_test, container, false);
-    mScrollUp = view.findViewById(R.id.scroll_up);
-    mScrollDown = view.findViewById(R.id.scroll_down);
-    mTranslationDown = view.findViewById(R.id.translation_down);
-    mTranslationUp = view.findViewById(R.id.translation_up);
-    mTarget = view.findViewById(R.id.target);
+
     return view;
   }
 
@@ -45,27 +41,7 @@ public class TestFragment extends Fragment {
   }
 
   private void initClick() {
-    mTarget.setOnClickListener(v -> {
-      Log.d(TAG, "top = " + v.getTop() + ", y = " + v.getY() + ", translationY = "
-          + v.getTranslationY() + ", scrollY = " + v.getScrollY());
-    });
 
-    mScrollDown.setOnClickListener(v -> {
-      Log.d(TAG, "scrollDown");
-      ((View)mTarget.getParent()).scrollBy(0, 300);
-    });
-    mScrollUp.setOnClickListener(v -> {
-      Log.d(TAG, "scrollUp");
-      ((View)mTarget.getParent()).scrollBy(0, -300);
-    });
-    mTranslationUp.setOnClickListener(v -> {
-      Log.d(TAG, "translationUp");
-      mTarget.setTranslationY(mTarget.getTranslationY() + 300);
-    });
-    mTranslationDown.setOnClickListener(v -> {
-      Log.d(TAG, "translationDown");
-      mTarget.setTranslationY(mTarget.getTranslationY() - 300);
-    });
 
   }
 
